@@ -1,6 +1,8 @@
 import { authOptions } from "@/lib/auth";
 import { getServerSession } from "next-auth";
-
+import DashboardPage from "@/components/dashboard/DashboardPage";
+import AppLayout from "@/components/AppLayout";
+import { redirect } from "next/navigation";
 
 export default async function Page() {
   const session = await getServerSession(authOptions);
@@ -8,6 +10,8 @@ export default async function Page() {
 
 
   return (
-   <h1>Foodies Heaven</h1>
+    <AppLayout>
+      <DashboardPage session={session} />
+    </AppLayout>
   );
 }
