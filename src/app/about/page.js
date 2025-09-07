@@ -1,8 +1,9 @@
 import { authOptions } from "@/lib/auth";
 import { getServerSession } from "next-auth";
-import DashboardPage from "@/components/dashboard/DashboardPage";
+
 import AppLayout from "@/components/AppLayout";
 import { redirect } from "next/navigation";
+import AboutPage from "@/components/about/AboutPage";
 
 export default async function Page() {
   const session = await getServerSession(authOptions);
@@ -11,7 +12,7 @@ export default async function Page() {
 
   return (
     <AppLayout>
-      <DashboardPage session={session} />
+      <AboutPage session={session} />
     </AppLayout>
   );
 }
