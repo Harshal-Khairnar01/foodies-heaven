@@ -1,15 +1,18 @@
+/* globals.css */
+
+/* Import Tailwind */
 @import "tailwindcss";
 
 :root {
   --background: #ffffff;
   --foreground: #171717;
-}
+  --tw-shadow-color: #000;
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  /* Animation variables defined here */
+  --animation-spin: spin 20s linear infinite; /* Slow plate spin */
+  --animation-wiggle: wiggle 1s ease-in-out infinite;
+  --animation-gradientxy: gradientxy 4s ease infinite;
+  --animation-gradientneon: gradientneon 1s ease infinite;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -20,7 +23,107 @@
 }
 
 body {
+  font-family: 'Inter', sans-serif;
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Animation classes linked to variables */
+.animate-spin {
+  animation: var(--animation-spin);
+}
+
+.animate-wiggle {
+  animation: var(--animation-wiggle);
+}
+
+.animate-gradientxy {
+  animation: var(--animation-gradientxy);
+}
+
+.animate-gradientneon {
+  animation: var(--animation-gradientneon);
+}
+
+/* ✅ New slow fade-left animation */
+.animate-fade-left-slow {
+  animation: fade-left 2s ease-in-out infinite;
+}
+
+/* Old fast animation - keep if needed */
+.animate-fade-left-fast {
+  animation: fade-left 900ms ease-in-out infinite;
+}
+
+/* Keyframes for animations */
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes wiggle {
+  0%, 100% {
+    transform: rotate(-3deg);
+  }
+  50% {
+    transform: rotate(3deg);
+  }
+}
+
+@keyframes gradientxy {
+  0%, 100% {
+    background-size: 400% 400%;
+    background-position: left center;
+  }
+  50% {
+    background-size: 200% 200%;
+    background-position: right center;
+  }
+}
+
+@keyframes gradientneon {
+  0%, 100% {
+    background-size: 100% 100%;
+    background-position: top center;
+  }
+  50% {
+    background-size: 200% 200%;
+    background-position: bottom center;
+  }
+  80% {
+    background-size: 400% 400%;
+    background-position: top center;
+  }
+}
+
+@keyframes fade-left {
+  0% {
+    transform: translateX(0);
+  }
+  50% {
+    transform: translateX(5px);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+.text-shadow-sm {
+  text-shadow: 0 1px 2px var(--tw-shadow-color);
+}
+
+.text-shadow {
+  text-shadow: 0 2px 4px var(--tw-shadow-color);
+}
+
+.text-shadow-lg {
+  text-shadow: 0 8px 16px var(--tw-shadow-color);
+}
+
+.shadow-cust {
+  box-shadow: rgba(0, 0, 0, 0.25) 0px 25px 50px -12px;
 }

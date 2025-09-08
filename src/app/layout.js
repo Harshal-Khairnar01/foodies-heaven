@@ -22,6 +22,11 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body
+        style={{
+          backgroundImage: "url('Layout2.jpg')",
+          backgroundSize: "cover",
+          backgroundRepeat: "no-repeat",
+        }}
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <SessionProvider>
