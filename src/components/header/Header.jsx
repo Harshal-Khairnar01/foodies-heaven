@@ -38,7 +38,7 @@ const Header = () => {
   }, []);
 
   return (
-    <div className="fixed top-0 left-0 w-full h-24 flex items-center z-[9999] bg-[url('/nav.png')] bg-cover transition-colors duration-500">
+    <div className="fixed top-0 left-0 w-full h-24 flex items-center z-[50] bg-[url('/nav.png')] bg-cover transition-colors duration-500">
       <div className="lg:w-11/12 w-full mx-auto flex justify-between items-center p-4 lg:p-3">
         <div className="p-2 flex-shrink-0">
           <Image

@@ -13,8 +13,8 @@ const CustomModal = ({
   if (!open) return null;
 
   return (
-    <div className="fixed inset-0 z-40 flex items-center justify-center bg-black/50 backdrop-blur-sm p-2">
-      <div className="relative  w-[400px]  rounded-lg bg-white p-4 shadow-xl">
+    <div className="fixed inset-0 flex items-center justify-center bg-black/60 backdrop-blur-sm z-[10000] p-4">
+      <div className="relative w-[400px] rounded-lg bg-white p-4 shadow-xl z-[10001]">
         <div className="flex justify-end">
           <button
             onClick={() => setOpen(false)}

@@ -1,17 +1,19 @@
 import { authOptions } from "@/lib/auth";
 import { getServerSession } from "next-auth";
-
-import AppLayout from "@/components/AppLayout";
 import { redirect } from "next/navigation";
-import AboutPage from "@/components/about/AboutPage";
+import AppLayout from "@/components/AppLayout";
+import Profile from "@/components/account/Profile";
+import Header from "@/components/header/Header";
 
 export default async function Page() {
   const session = await getServerSession(authOptions);
-  console.log(session);
+  if (!session) {
+    redirect("/");
+  }
 
   return (
-    <AppLayout>
-      <AboutPage session={session} />
-    </AppLayout>
+    <>
+      <Profile user={session.user} />
+    </>
   );
 }
