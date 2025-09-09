@@ -33,7 +33,7 @@ const UserDropdown = ({ setLogoutOpen, isMobile }) => {
         width={50}
         height={50}
         alt={session.user.username || "user avatar"}
-        src={session.user.avatar?.url || "/chef.png"}
+        src={session.user.image || "/chef.png"}
         className={`w-12 h-12 rounded-full cursor-pointer border-2 transition-opacity duration-300 ${
           pathname === "/account" ? "border-red-600" : "border-black"
         }`}

@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import { FcGoogle } from "react-icons/fc";
 import { useForm } from "react-hook-form";
-import { signIn } from "next-auth/react";
+import { signIn, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import axios from "axios";
 import toast from "react-hot-toast";
@@ -16,6 +16,7 @@ const AuthForm = ({ origin, setRoute, setOpen }) => {
   const [verificationStep, setVerificationStep] = useState(false);
   const [emailForVerification, setEmailForVerification] = useState("");
   const router = useRouter();
+  const { update: updateSession } = useSession();
 
   const {
     register,
@@ -40,7 +41,7 @@ const AuthForm = ({ origin, setRoute, setOpen }) => {
     }
   };
 
-  const onVerificationSuccess = () => {
+  const onVerificationSuccess = async () => {
     reset();
     setVerificationStep(false);
     setRoute("signIn");
@@ -49,13 +50,15 @@ const AuthForm = ({ origin, setRoute, setOpen }) => {
   const onSubmit = async (data) => {
     try {
       setLoading(true);
+
       if (origin === "signIn") {
         const res = await signIn("credentials", { ...data, redirect: false });
+
         if (res?.ok) {
-          toast.success("Logged in successfully");
+          toast.success("Logged in successfully!");
           reset();
+          await updateSession();
           router.push("/");
-          router.refresh();
           setOpen(false);
         } else {
           toast.error(res?.error || "Invalid email or password!");
@@ -67,6 +70,7 @@ const AuthForm = ({ origin, setRoute, setOpen }) => {
           email: data.email,
           password: data.password,
         });
+
         if (res.status === 201) {
           toast.success("Verification code sent to your email!");
           setEmailForVerification(data.email);
@@ -236,29 +240,27 @@ const AuthForm = ({ origin, setRoute, setOpen }) => {
               : "Sign In with Google"}
           </button>
 
-          <>
-            {origin === "signIn" ? (
-              <h5 className="text-sm text-gray-500 px-2 mt-3">
-                Don&apos;t have an Account?
-                <span
-                  className="cursor-pointer ml-3 font-extrabold text-xs text-red-500 hover:border-b-2 border-red-500"
-                  onClick={() => setRoute("signUp")}
-                >
-                  Register
-                </span>
-              </h5>
-            ) : (
-              <h5 className="text-sm text-gray-500 px-2 mt-3">
-                Already have an Account?
-                <span
-                  className="cursor-pointer ml-3 font-extrabold text-xs text-red-500 hover:border-b-2 border-red-500"
-                  onClick={() => setRoute("signIn")}
-                >
-                  Login
-                </span>
-              </h5>
-            )}
-          </>
+          {origin === "signIn" ? (
+            <h5 className="text-sm text-gray-500 px-2 mt-3">
+              Don&apos;t have an Account?
+              <span
+                className="cursor-pointer ml-3 font-extrabold text-xs text-red-500 hover:border-b-2 border-red-500"
+                onClick={() => setRoute("signUp")}
+              >
+                Register
+              </span>
+            </h5>
+          ) : (
+            <h5 className="text-sm text-gray-500 px-2 mt-3">
+              Already have an Account?
+              <span
+                className="cursor-pointer ml-3 font-extrabold text-xs text-red-500 hover:border-b-2 border-red-500"
+                onClick={() => setRoute("signIn")}
+              >
+                Login
+              </span>
+            </h5>
+          )}
         </form>
       </div>
     </div>

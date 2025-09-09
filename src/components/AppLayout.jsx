@@ -10,9 +10,7 @@ const AppLayout = ({ children }) => {
   return (
     <div className="flex flex-col min-h-screen text-black">
       <Header session={session} />
-      <main className="mt-24 flex-1 w-full mx-auto relative z-10">
-        {children}
-      </main>
+      <main className="mt-24 flex-1 w-full mx-auto relative">{children}</main>
       <Footer />
     </div>
   );
