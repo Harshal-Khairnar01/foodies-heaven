@@ -171,7 +171,7 @@ export default function RecipeForm({ refetch }) {
         userId: "clz4b72740000a6g6b9d6a2k9",
       };
 
-      const response = await axios.post("/api/recipes", payload);
+      const response = await axios.post("/api/recipe", payload);
 
       if (response.status === 201) {
         toast.success("Recipe added successfully!");

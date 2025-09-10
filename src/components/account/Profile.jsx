@@ -6,41 +6,15 @@ import SideBarProfile from "./SideBarProfile";
 import ChangePassword from "./ChangePassword";
 import ProfileInfo from "./ProfileInfo";
 import RecipeForm from "./RecipeForm";
-import RecipeContainer from "./RecipeContainer";
-import ConfirmModal from "@/utils/ConfirmModal"; // Import the modal here
-import { useSearchParams, useRouter } from "next/navigation";
-import axios from "axios";
+import ConfirmModal from "@/utils/ConfirmModal";
+
 import { signOut } from "next-auth/react";
+import UserRecipes from "./UserRecipes"; 
 
 const Profile = ({ user }) => {
   const [active, setActive] = useState(1);
   const [avatar, setAvatar] = useState(null);
-  const [recipes, setRecipes] = useState([]);
-  const [count, setCount] = useState(0);
-  const [logoutOpen, setLogoutOpen] = useState(false); // Move state here
-  const searchParams = useSearchParams();
-  const router = useRouter();
-
-  const page = parseInt(searchParams.get("page")) || 1;
-  const recipe = searchParams.get("recipe") || "";
-
-  useEffect(() => {
-    const fetchRecipes = async () => {
-      try {
-        const res = await axios.get(`/api/recipes?userId=${user.id}`);
-        setRecipes(res.data.recipes);
-      } catch (error) {
-        console.error("Failed to fetch recipes:", error);
-      }
-    };
-    if (user?.id) {
-      fetchRecipes();
-    }
-  }, [user?.id, count]);
-
-  const refetchRecipes = () => {
-    setCount((prev) => prev + 1);
-  };
+  const [logoutOpen, setLogoutOpen] = useState(false);
 
   const logoutHandler = async () => {
     try {
@@ -59,10 +33,9 @@ const Profile = ({ user }) => {
             active={active}
             setActive={setActive}
             avatar={avatar}
-            setLogoutOpen={setLogoutOpen} // Pass the setter to the sidebar
+            setLogoutOpen={setLogoutOpen}
           />
         </div>
-
         <div className="w-full h-screen overflow-y-auto">
           {active === 1 && (
             <div className="w-full h-screen bg-transparent flex justify-center items-center">
@@ -75,32 +48,15 @@ const Profile = ({ user }) => {
             </div>
           )}
           {active === 3 && (
-            <div className="w-full mt-20">
-              <div className="w-11/12 mx-auto flex lg:justify-end">Search Bar</div>
-              <div className="mt-10 w-full pl-7 px-2 800px:px-10 800px:pl-8">
-                <div className="grid grid-cols-1 gap-[20px] md:grid-cols-2 md:gap-[25px] lg:grid-cols-2 lg:gap-[25px] xl:grid-cols-3 xl:gap-[35px]">
-                  {recipes.length > 0 ? (
-                    recipes.map((recipe) => (
-                      <RecipeContainer key={recipe._id} recipe={recipe} />
-                    ))
-                  ) : (
-                    <h1 className="text-center text-[18px] font-Poppins">
-                      You don&apos;t have any Recipes!
-                    </h1>
-                  )}
-                </div>
-              </div>
-              <div className="w-9/12 mx-auto lg:mb-7">Pagination</div>
-            </div>
+            <UserRecipes user={user} /> 
           )}
           {active === 4 && (
             <div className="w-full">
-              <RecipeForm refetch={refetchRecipes} />
+              <RecipeForm />
             </div>
           )}
         </div>
       </div>
-      {/* Render the modal outside of the main layout div */}
       <ConfirmModal
         open={logoutOpen}
         setOpen={setLogoutOpen}
