@@ -6,7 +6,7 @@ import avatarIcon from "../../../public/chef.png";
 import axios from "axios";
 import ImageUpload from "./ImageUpload";
 import { useSession } from "next-auth/react";
-import { FaCamera } from "react-icons/fa"; // Import the camera icon
+import { FaCamera } from "react-icons/fa";
 
 const ProfileInfo = ({ user }) => {
   const { data: session, update } = useSession();
@@ -76,11 +76,10 @@ const ProfileInfo = ({ user }) => {
               alt={name}
               width={130}
               height={130}
-              className="w-[130px] h-[130px] border-4 border-[#37a39a] rounded-full object-cover shadow-md transition-transform duration-300 transform group-hover:scale-105"
+              className="w-[130px] h-[130px] border-4 border-[#37a39a] rounded-full object-contain shadow-md transition-transform duration-300 transform group-hover:scale-105"
             />
           )}
 
-          {/* New Camera Icon UI for ImageUpload */}
           <div className="absolute bottom-2 right-2 p-2 bg-[#37a39a] text-white rounded-full shadow-md hover:bg-[#2e8f85] transition-colors duration-300">
             <ImageUpload returnUrl={handleImageUpdate}>
               <FaCamera size={16} />
@@ -106,7 +105,6 @@ const ProfileInfo = ({ user }) => {
             />
           </div>
 
-          {/* Email */}
           <div className="mb-4">
             <label className="block text-gray-700 dark:text-gray-300 mb-1">
               Email Address
@@ -119,7 +117,6 @@ const ProfileInfo = ({ user }) => {
             />
           </div>
 
-          {/* Submit Button */}
           <button
             type="submit"
             className={`w-full md:w-[250px] py-2 bg-[#37a39a] text-white font-semibold rounded-md shadow-md ${

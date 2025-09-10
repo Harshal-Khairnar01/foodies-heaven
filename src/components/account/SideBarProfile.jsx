@@ -1,7 +1,9 @@
+// SideBarProfile.jsx
+
 "use client";
 
 import Image from "next/image";
-import React, { useState } from "react";
+import React from "react";
 import avatarDefault from "../../../public/chef.png";
 import { RiLockPasswordLine } from "react-icons/ri";
 import { GiCookingPot } from "react-icons/gi";
@@ -9,12 +11,9 @@ import { AiOutlineLogout } from "react-icons/ai";
 import { MdOutlineAdminPanelSettings, MdOutlinePostAdd } from "react-icons/md";
 import { FaHome } from "react-icons/fa";
 import Link from "next/link";
-import ConfirmModal from "@/utils/ConfirmModal";
-import { signOut } from "next-auth/react";
 
-const SideBarProfile = ({ user, active, avatar, setActive }) => {
-  const [logoutOpen, setLogoutOpen] = useState(false);
-
+// Accept setLogoutOpen as a prop
+const SideBarProfile = ({ user, active, avatar, setActive, setLogoutOpen }) => {
   return (
     <div className="w-[70px] sm:w-[220px] bg-gray-300 h-screen border-r-2 border-gray-600 shadow-sm flex flex-col items-center sm:items-start transition-all duration-300 py-5">
       <div
@@ -87,21 +86,11 @@ const SideBarProfile = ({ user, active, avatar, setActive }) => {
         className={`flex items-center gap-3 w-full px-5 py-4 my-2 cursor-pointer transition-all duration-300 ${
           active === 5 ? "bg-white shadow-md" : "hover:bg-gray-200"
         }`}
-        onClick={() => setLogoutOpen(true)}
+        onClick={() => setLogoutOpen(true)} // Use the passed setter
       >
         <AiOutlineLogout size={22} className="text-gray-700" />
         <h5 className="hidden sm:block text-black">Log Out</h5>
       </button>
-
-      <ConfirmModal
-        open={logoutOpen}
-        setOpen={setLogoutOpen}
-        title="Confirm Logout"
-        message="Are you sure you want to logout?"
-        onConfirm={() => signOut({ callbackUrl: "/" })}
-        confirmText="Logout"
-        cancelText="Cancel"
-      />
     </div>
   );
 };

@@ -1,15 +1,12 @@
 /* globals.css */
 
-/* Import Tailwind */
 @import "tailwindcss";
 
 :root {
   --background: #ffffff;
   --foreground: #171717;
   --tw-shadow-color: #000;
-
-  /* Animation variables defined here */
-  --animation-spin: spin 20s linear infinite; /* Slow plate spin */
+  --animation-spin: spin 20s linear infinite;
   --animation-wiggle: wiggle 1s ease-in-out infinite;
   --animation-gradientxy: gradientxy 4s ease infinite;
   --animation-gradientneon: gradientneon 1s ease infinite;
@@ -28,7 +25,6 @@ body {
   color: var(--foreground);
 }
 
-/* Animation classes linked to variables */
 .animate-spin {
   animation: var(--animation-spin);
 }
@@ -45,17 +41,40 @@ body {
   animation: var(--animation-gradientneon);
 }
 
-/* ✅ New slow fade-left animation */
 .animate-fade-left-slow {
   animation: fade-left 2s ease-in-out infinite;
 }
 
-/* Old fast animation - keep if needed */
 .animate-fade-left-fast {
   animation: fade-left 900ms ease-in-out infinite;
 }
 
-/* Keyframes for animations */
+.animate-bounce {
+  animation: bounce 1s infinite;
+}
+
+.animate-bounce-150 {
+  animation: bounce 1s infinite;
+  animation-delay: 150ms;
+}
+
+.animate-bounce-200 {
+  animation: bounce 1s infinite;
+  animation-delay: 200ms;
+}
+
+@keyframes bounce {
+  0%,
+  100% {
+    transform: translateY(0);
+    animation-timing-function: cubic-bezier(0.8, 0, 1, 1);
+  }
+  50% {
+    transform: translateY(-50%);
+    animation-timing-function: cubic-bezier(0, 0, 0.2, 1);
+  }
+}
+
 @keyframes spin {
   from {
     transform: rotate(0deg);
@@ -66,7 +85,8 @@ body {
 }
 
 @keyframes wiggle {
-  0%, 100% {
+  0%,
+  100% {
     transform: rotate(-3deg);
   }
   50% {
@@ -75,7 +95,8 @@ body {
 }
 
 @keyframes gradientxy {
-  0%, 100% {
+  0%,
+  100% {
     background-size: 400% 400%;
     background-position: left center;
   }
@@ -86,7 +107,8 @@ body {
 }
 
 @keyframes gradientneon {
-  0%, 100% {
+  0%,
+  100% {
     background-size: 100% 100%;
     background-position: top center;
   }
