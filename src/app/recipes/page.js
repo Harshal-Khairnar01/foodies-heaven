@@ -3,16 +3,15 @@ import { getServerSession } from "next-auth";
 
 import AppLayout from "@/components/AppLayout";
 import { redirect } from "next/navigation";
-import RecipePage from "@/components/recipe/RecipePage";
+import Recipes from "@/components/recipes/Recipes";
 
 export default async function Page() {
   const session = await getServerSession(authOptions);
-    console.log(session)
 
 
   return (
     <AppLayout>
-      <RecipePage session={session} />
+      <Recipes session={session} />
     </AppLayout>
   );
 }
