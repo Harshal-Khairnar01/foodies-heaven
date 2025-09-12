@@ -1,8 +1,8 @@
 import { NextResponse } from "next/server";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/lib/auth";
+import { prisma } from "@/lib/prisma";
 
-// =================== GET ===================
 export async function GET(request) {
   try {
     const session = await getServerSession(authOptions);
@@ -16,7 +16,6 @@ export async function GET(request) {
     const skip = (page - 1) * limit;
     const take = limit;
 
-    // Default search condition (for everyone)
     let whereCondition = {
       OR: [
         { title: { contains: recipeQuery, mode: "insensitive" } },
@@ -33,13 +32,11 @@ export async function GET(request) {
       if (!user)
         return NextResponse.json({ message: "User not found" }, { status: 404 });
 
-      // ✅ If `myRecipes=true` → show only user's recipes
       if (myRecipes) {
         whereCondition.userId = user.id;
       }
     }
 
-    // ✅ If user is admin → fetch all recipes (ignore myRecipes flag)
     if (user?.isAdmin) {
       delete whereCondition.userId;
     }
@@ -68,7 +65,7 @@ export async function GET(request) {
   }
 }
 
-// =================== POST ===================
+
 export async function POST(request) {
   try {
     const session = await getServerSession(authOptions);
@@ -134,7 +131,6 @@ export async function POST(request) {
   }
 }
 
-// =================== DELETE ===================
 export async function DELETE(request) {
   try {
     const session = await getServerSession(authOptions);
