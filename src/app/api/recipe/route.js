@@ -2,17 +2,21 @@ import { NextResponse } from "next/server";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/lib/auth";
 
+// =================== GET ===================
 export async function GET(request) {
   try {
+    const session = await getServerSession(authOptions);
     const { searchParams } = new URL(request.url);
+
     const recipeQuery = searchParams.get("recipe") || "";
     const page = parseInt(searchParams.get("page")) || 1;
     const limit = parseInt(searchParams.get("limit")) || 3;
-    const userId = searchParams.get("userId");
+    const myRecipes = searchParams.get("myRecipes") === "true";
 
     const skip = (page - 1) * limit;
     const take = limit;
 
+    // Default search condition (for everyone)
     let whereCondition = {
       OR: [
         { title: { contains: recipeQuery, mode: "insensitive" } },
@@ -20,24 +24,43 @@ export async function GET(request) {
       ],
     };
 
-    if (userId) {
-      whereCondition.userId = userId;
+    let user = null;
+    if (session?.user?.email) {
+      user = await prisma.user.findUnique({
+        where: { email: session.user.email },
+      });
+
+      if (!user)
+        return NextResponse.json({ message: "User not found" }, { status: 404 });
+
+      // ✅ If `myRecipes=true` → show only user's recipes
+      if (myRecipes) {
+        whereCondition.userId = user.id;
+      }
+    }
+
+    // ✅ If user is admin → fetch all recipes (ignore myRecipes flag)
+    if (user?.isAdmin) {
+      delete whereCondition.userId;
     }
 
     const recipes = await prisma.recipe.findMany({
       where: whereCondition,
       orderBy: { createdAt: "desc" },
-      skip: skip,
-      take: take,
+      skip,
+      take,
+      include: {
+        user: {
+          select: { id: true, name: true, email: true },
+        },
+      },
     });
 
-    const count = await prisma.recipe.count({
-      where: whereCondition,
-    });
+    const count = await prisma.recipe.count({ where: whereCondition });
 
     return NextResponse.json({ recipes, count }, { status: 200 });
   } catch (err) {
-    console.error("API error", err);
+    console.error("API GET error", err);
     return NextResponse.json(
       { message: err.message || "Server error" },
       { status: 500 }
@@ -45,6 +68,7 @@ export async function GET(request) {
   }
 }
 
+// =================== POST ===================
 export async function POST(request) {
   try {
     const session = await getServerSession(authOptions);
@@ -53,7 +77,6 @@ export async function POST(request) {
     }
 
     const body = await request.json();
-
     const required = [
       "title",
       "description",
@@ -63,6 +86,7 @@ export async function POST(request) {
       "ingredients",
       "recipe",
     ];
+
     for (const key of required) {
       if (!body[key]) {
         return NextResponse.json(
@@ -102,7 +126,7 @@ export async function POST(request) {
 
     return NextResponse.json({ recipe: newRecipe }, { status: 201 });
   } catch (err) {
-    console.error("API error", err);
+    console.error("API POST error", err);
     return NextResponse.json(
       { message: err.message || "Server error" },
       { status: 500 }
@@ -110,7 +134,7 @@ export async function POST(request) {
   }
 }
 
-
+// =================== DELETE ===================
 export async function DELETE(request) {
   try {
     const session = await getServerSession(authOptions);
@@ -146,9 +170,10 @@ export async function DELETE(request) {
       );
     }
 
-    if (recipe.userId !== user.id) {
+    // ✅ Allow only recipe owner OR admin to delete
+    if (recipe.userId !== user.id && !user.isAdmin) {
       return NextResponse.json(
-        { message: "Forbidden: You are not the owner of this recipe" },
+        { message: "Forbidden: You are not allowed to delete this recipe" },
         { status: 403 }
       );
     }
@@ -162,7 +187,7 @@ export async function DELETE(request) {
       { status: 200 }
     );
   } catch (err) {
-    console.error("API error", err);
+    console.error("API DELETE error", err);
     return NextResponse.json(
       { message: err.message || "Server error" },
       { status: 500 }

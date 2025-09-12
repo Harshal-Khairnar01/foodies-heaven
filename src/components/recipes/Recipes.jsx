@@ -45,6 +45,7 @@ const Recipes = () => {
         <Search
           className="bg-[#2e374a] text-white"
           placeholder="Search recipe.."
+          paramKey="recipe"
         />
       </div>
       <div className="mx-auto w-11/12">
@@ -56,7 +57,15 @@ const Recipes = () => {
         </h3>
       </div>
       {loading ? (
-        <p className="text-center text-lg my-8">Loading recipes...</p>
+       <div className=" w-full flex justify-center items-center h-[300px]">
+         <div className="flex gap-2 ">
+          <div className="w-2 h-2 rounded-full animate-bounce-150 bg-pink-600"></div>
+          <div className="w-2 h-2 rounded-full animate-bounce bg-red-600"></div>
+          <div className="w-2 h-2 rounded-full animate-bounce-150 bg-pink-600"></div>
+          <div className="w-2 h-2 rounded-full animate-bounce-200 bg-red-600"></div>
+          <div className="w-2 h-2 rounded-full animate-bounce-150 bg-pink-600"></div>
+        </div>
+       </div>
       ) : (
         <div className="lg:mt-4 grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 w-full lg:gap-12 gap-2 lg:px-8 lg:py-6 p-3">
           {recipes.length > 0 ? (

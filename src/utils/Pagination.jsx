@@ -2,32 +2,29 @@
 import { usePathname, useSearchParams, useRouter } from "next/navigation";
 import React from "react";
 
-const Pagination = ({ count, ITEM_PER_PAGE }) => {
-  // console.log(count, "from pagination...");
+const Pagination = ({ count, ITEM_PER_PAGE, paramKey = "page" }) => {
   const searchParams = useSearchParams();
   const { replace } = useRouter();
   const pathname = usePathname();
 
-  const page = parseInt(searchParams.get("page")) || 1;
+  const page = parseInt(searchParams.get(paramKey)) || 1;
 
   const params = new URLSearchParams(searchParams);
-
-  //   const ITEM_PER_PAGE = 3;
 
   const hasPrev = ITEM_PER_PAGE * (page - 1) > 0;
   const hasNext = ITEM_PER_PAGE * (page - 1) + parseInt(ITEM_PER_PAGE) < count;
 
   const handleChangePage = (type, e) => {
     e.preventDefault();
-    params.set("page", type === "prev" ? page - 1 : page + 1);
+    params.set(paramKey, type === "prev" ? page - 1 : page + 1);
     replace(`${pathname}?${params.toString()}`);
   };
 
   return (
-    <div className="p-2 flex justify-between">
+    <div className="p-2 flex justify-between w-full">
       <button
-        className={`px-2 py-1  text-bgSoft rounded-md shadow-[rgba(0,_0,_0,_0.24)_0px_3px_8px] ${
-          hasPrev ? "bg-red-50 font-bold" : "cursor-not-allowed  bg-[#3b455d]"
+        className={`px-2 py-1 rounded-md shadow-md ${
+          hasPrev ? "bg-red-50 font-bold" : "cursor-not-allowed bg-gray-400"
         }`}
         disabled={!hasPrev}
         onClick={(e) => handleChangePage("prev", e)}
@@ -35,8 +32,8 @@ const Pagination = ({ count, ITEM_PER_PAGE }) => {
         Previous
       </button>
       <button
-        className={`px-2 py-1 text-bgSoft rounded-md shadow-[rgba(0,_0,_0,_0.24)_0px_3px_8px] ${
-          hasNext ? "bg-red-50 font-bold" : "cursor-not-allowed bg-[#3b455d]"
+        className={`px-2 py-1 rounded-md shadow-md ${
+          hasNext ? "bg-red-50 font-bold" : "cursor-not-allowed bg-gray-400"
         }`}
         disabled={!hasNext}
         onClick={(e) => handleChangePage("next", e)}

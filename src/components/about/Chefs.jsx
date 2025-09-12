@@ -50,7 +50,13 @@ export default function Chefs() {
   if (isLoading) {
     return (
       <div className="w-full h-[200px] flex justify-center items-center text-2xl font-bold text-red-500">
-        Loading...
+        <div className="flex gap-2">
+          <div className="w-3 h-3 rounded-full animate-bounce bg-red-600"></div>
+          <div className="w-3 h-3 rounded-full animate-bounce-150 bg-white"></div>
+          <div className="w-3 h-3 rounded-full animate-bounce-200 bg-red-600"></div>
+          <div className="w-3 h-3 rounded-full animate-bounce-150 bg-white"></div>
+          <div className="w-3 h-3 rounded-full animate-bounce bg-red-600"></div>
+        </div>
       </div>
     );
   }
