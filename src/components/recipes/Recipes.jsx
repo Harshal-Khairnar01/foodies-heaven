@@ -5,6 +5,8 @@ import RecipeContainer from "./RecipeContainer";
 import { useSearchParams } from "next/navigation";
 import Search from "@/utils/Search";
 import Pagination from "@/utils/Pagination";
+import DotLoader from "@/utils/DotLoader";
+import axios from "axios";
 
 const Recipes = () => {
   const [recipes, setRecipes] = useState([]);
@@ -20,14 +22,17 @@ const Recipes = () => {
   const fetchRecipes = async () => {
     try {
       setLoading(true);
-      const res = await fetch(
-        `/api/recipe?page=${page}&limit=${ITEM_PER_PAGE}&recipe=${recipe}`
-      );
-      const data = await res.json();
-      if (res.ok) {
-        setRecipes(data.recipes);
-        setCount(data.count);
-      }
+
+      const res = await axios.get("/api/recipe", {
+        params: {
+          page,
+          limit: ITEM_PER_PAGE,
+          recipe,
+        },
+      });
+
+      setRecipes(res.data.recipes);
+      setCount(res.data.count);
     } catch (error) {
       console.error("Failed to fetch recipes", error);
     } finally {
@@ -57,15 +62,9 @@ const Recipes = () => {
         </h3>
       </div>
       {loading ? (
-       <div className=" w-full flex justify-center items-center h-[300px]">
-         <div className="flex gap-2 ">
-          <div className="w-2 h-2 rounded-full animate-bounce-150 bg-pink-600"></div>
-          <div className="w-2 h-2 rounded-full animate-bounce bg-red-600"></div>
-          <div className="w-2 h-2 rounded-full animate-bounce-150 bg-pink-600"></div>
-          <div className="w-2 h-2 rounded-full animate-bounce-200 bg-red-600"></div>
-          <div className="w-2 h-2 rounded-full animate-bounce-150 bg-pink-600"></div>
+        <div className=" w-full flex justify-center items-center h-[300px]">
+          <DotLoader />
         </div>
-       </div>
       ) : (
         <div className="lg:mt-4 grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 w-full lg:gap-12 gap-2 lg:px-8 lg:py-6 p-3">
           {recipes.length > 0 ? (
