@@ -7,6 +7,7 @@ import RF1 from "./RF1";
 import RF2 from "./RF2";
 import RF3 from "./RF3";
 import { uploadToBlob } from "@/utils/uploadToBlob";
+import DotLoader from "@/utils/DotLoader";
 
 export default function RecipeForm({ refetch }) {
   const [active, setActive] = useState(0);
@@ -238,13 +239,7 @@ export default function RecipeForm({ refetch }) {
             <span className="text-xl font-bold text-red-600 animate-duration-[2000ms]">
               Adding Recipe
             </span>
-            <div className="flex gap-2">
-              <div className="w-2 h-2 rounded-full animate-bounce bg-red-600"></div>
-
-              <div className="w-2 h-2 rounded-full animate-bounce-150 bg-pink-600"></div>
-
-              <div className="w-2 h-2 rounded-full animate-bounce-200 bg-red-600"></div>
-            </div>
+           <DotLoader/>
           </div>
         </div>
       )}

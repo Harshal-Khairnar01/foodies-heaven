@@ -7,6 +7,7 @@ import Search from "@/utils/Search";
 import { FaTrash } from "react-icons/fa";
 import ConfirmModal from "@/utils/ConfirmModal";
 import Link from "next/link";
+import DotLoader from "@/utils/DotLoader";
 
 const UserRecipes = ({ user, isAdmin = false }) => {
   const [recipes, setRecipes] = useState([]);
@@ -76,13 +77,7 @@ const UserRecipes = ({ user, isAdmin = false }) => {
 
       <div className=" mt-8 lg:mt-10 w-full lg:px-2 800px:px-10 800px:pl-8 min-h-[440px]  md:h-[440px] flex justify-center items-center">
         {loading ? (
-          <div className="flex gap-2">
-            <div className="w-2 h-2 rounded-full animate-bounce-150 bg-pink-600"></div>
-            <div className="w-2 h-2 rounded-full animate-bounce bg-red-600"></div>
-            <div className="w-2 h-2 rounded-full animate-bounce-150 bg-pink-600"></div>
-            <div className="w-2 h-2 rounded-full animate-bounce-200 bg-red-600"></div>
-            <div className="w-2 h-2 rounded-full animate-bounce-150 bg-pink-600"></div>
-          </div>
+         <DotLoader/>
         ) : (
           <ul className="space-y-4 w-full  ">
             {recipes.length > 0 ? (

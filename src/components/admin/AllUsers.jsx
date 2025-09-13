@@ -6,6 +6,7 @@ import axios from "axios";
 import Pagination from "@/utils/Pagination";
 import Search from "@/utils/Search";
 import UserCard from "./UserCard";
+import DotLoader from "@/utils/DotLoader";
 
 const AllUsers = ({ handleDeleteUser }) => {
   const [users, setUsers] = useState([]);
@@ -52,19 +53,17 @@ const AllUsers = ({ handleDeleteUser }) => {
 
       <div className=" mt-4 lg:mt-10 w-full lg:px-2 800px:px-10 800px:pl-8 h-[440px] flex justify-center items-center ">
         {loading ? (
-          <div className="flex gap-2">
-            <div className="w-2 h-2 rounded-full animate-bounce-150 bg-pink-600"></div>
-            <div className="w-2 h-2 rounded-full animate-bounce bg-red-600"></div>
-            <div className="w-2 h-2 rounded-full animate-bounce-150 bg-pink-600"></div>
-            <div className="w-2 h-2 rounded-full animate-bounce-200 bg-red-600"></div>
-            <div className="w-2 h-2 rounded-full animate-bounce-150 bg-pink-600"></div>
-          </div>
+          <DotLoader />
         ) : (
           <>
             {users.length > 0 ? (
               <div className=" w-full grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-2 md:gap-6 ">
                 {users.map((user) => (
-                  <UserCard key={user.id} user={user} handleDeleteUser={handleDeleteUser} />
+                  <UserCard
+                    key={user.id}
+                    user={user}
+                    handleDeleteUser={handleDeleteUser}
+                  />
                 ))}
               </div>
             ) : (
