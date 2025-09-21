@@ -63,7 +63,7 @@ const ProfileInfo = ({ user }) => {
   };
 
   return (
-    <div className="w-10/12 md:w-8/12 lg:w-6/12 mx-auto my-6 bg-white dark:bg-[#5b40e1] shadow-lg rounded-2xl p-6">
+    <div className="w-10/12 md:w-8/12 lg:w-6/12 mx-auto my-6 bg-white  shadow-lg rounded-2xl p-6">
       <div className="w-full flex justify-center">
         <div className="relative group">
           {isLoading ? (
@@ -93,12 +93,12 @@ const ProfileInfo = ({ user }) => {
         <div className="w-full md:w-[80%] lg:w-[60%] mx-auto">
           {/* Full Name */}
           <div className="mb-4">
-            <label className="block text-gray-700 dark:text-gray-300 mb-1">
+            <label className="block text-gray-700  mb-1">
               Full Name
             </label>
             <input
               type="text"
-              className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-[#37a39a] dark:bg-gray-700 dark:text-white"
+              className="w-full px-4 py-2 border border-gray-300  rounded-md focus:outline-none focus:ring-2 focus:ring-[#37a39a] "
               required
               value={name}
               onChange={(e) => setName(e.target.value)}
@@ -106,13 +106,13 @@ const ProfileInfo = ({ user }) => {
           </div>
 
           <div className="mb-4">
-            <label className="block text-gray-700 dark:text-gray-300 mb-1">
+            <label className="block text-gray-700  mb-1">
               Email Address
             </label>
             <input
               type="text"
               readOnly
-              className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-400 cursor-not-allowed"
+              className="w-full px-4 py-2 border border-gray-300  rounded-md bg-gray-100  text-gray-600  cursor-not-allowed"
               value={user?.email || ""}
             />
           </div>

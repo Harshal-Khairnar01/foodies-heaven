@@ -37,8 +37,8 @@ const ChangePassword = () => {
   };
 
   return (
-    <div className="w-10/12 md:w-8/12 lg:w-6/12 mx-auto my-6 bg-white dark:bg-gray-800 shadow-lg rounded-2xl p-6">
-      <h1 className="text-2xl md:text-3xl font-semibold text-center pb-4 text-black dark:text-white">
+    <div className="w-10/12 md:w-8/12 lg:w-6/12 mx-auto my-6 bg-white shadow-lg rounded-2xl p-6">
+      <h1 className="text-2xl md:text-3xl font-semibold text-center pb-4 text-black ">
         Change Password
       </h1>
       <form
@@ -46,13 +46,13 @@ const ChangePassword = () => {
         className="flex flex-col items-center"
       >
         <div className="w-full md:w-[80%] lg:w-[60%] mt-5 relative">
-          <label className="block text-gray-700 dark:text-gray-300 mb-1">
+          <label className="block text-gray-700  mb-1">
             Enter Your Password
           </label>
           <div className="relative">
             <input
               type={showOld ? "text" : "password"}
-              className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-[#37a39a] dark:bg-gray-700 dark:text-white"
+              className="w-full px-4 py-2 border border-gray-300  rounded-md focus:outline-none focus:ring-2 focus:ring-[#37a39a] "
               value={oldPassword}
               onChange={(e) => setOldPassword(e.target.value)}
             />
@@ -73,13 +73,13 @@ const ChangePassword = () => {
         </div>
 
         <div className="w-full md:w-[80%] lg:w-[60%] mt-5">
-          <label className="block text-gray-700 dark:text-gray-300 mb-1">
+          <label className="block text-gray-700  mb-1">
             Enter Your New Password
           </label>
           <div className="relative">
             <input
               type={showNew ? "text" : "password"}
-              className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-[#37a39a] dark:bg-gray-700 dark:text-white"
+              className="w-full px-4 py-2 border border-gray-300  rounded-md focus:outline-none focus:ring-2 focus:ring-[#37a39a] "
               value={newPassword}
               onChange={(e) => setNewPassword(e.target.value)}
             />
@@ -100,13 +100,13 @@ const ChangePassword = () => {
         </div>
 
         <div className="w-full md:w-[80%] lg:w-[60%] mt-5 relative">
-          <label className="block text-gray-700 dark:text-gray-300 mb-1">
+          <label className="block text-gray-700  mb-1">
             Confirm New Password
           </label>
           <div className="relative">
             <input
               type={showConfirm ? "text" : "password"}
-              className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-[#37a39a] dark:bg-gray-700 dark:text-white"
+              className="w-full px-4 py-2 border border-gray-300  rounded-md focus:outline-none focus:ring-2 focus:ring-[#37a39a] "
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
             />

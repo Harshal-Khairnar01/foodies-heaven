@@ -12,13 +12,12 @@ import { MdOutlineAdminPanelSettings, MdOutlinePostAdd } from "react-icons/md";
 import { FaHome } from "react-icons/fa";
 import Link from "next/link";
 
-// Accept setLogoutOpen as a prop
 const SideBarProfile = ({ user, active, avatar, setActive, setLogoutOpen }) => {
   return (
     <div className="w-[70px] sm:w-[220px] bg-gray-300 h-screen border-r-2 border-gray-600 shadow-sm flex flex-col items-center sm:items-start transition-all duration-300 py-5">
       <div
         className={`flex items-center gap-3 w-full px-5 py-4 cursor-pointer ${
-          active === 1 ? "dark:bg-slate-800 bg-white" : "bg-transparent"
+          active === 1 ? " bg-white" : "bg-transparent"
         }`}
         onClick={() => setActive(1)}
       >
@@ -29,7 +28,7 @@ const SideBarProfile = ({ user, active, avatar, setActive, setLogoutOpen }) => {
           width={30}
           height={30}
         />
-        <h5 className="hidden sm:block dark:text-white text-black">
+        <h5 className="hidden sm:block  text-black">
           My Account
         </h5>
       </div>
