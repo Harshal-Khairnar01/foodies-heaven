@@ -56,7 +56,75 @@ export async function POST(request) {
     await sendEmail({
       email,
       subject: "Account Verification",
-      message: `Your 4-digit verification code is: ${verificationCode}. It will expire in 15 minutes.`,
+      message: `<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Account Verification</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 600px;
+            margin: 20px auto;
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .header {
+            text-align: center;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #eeeeee;
+        }
+        .header h1 {
+            color: #333333;
+        }
+        .content {
+            padding: 20px 0;
+            text-align: center;
+        }
+        .code {
+            display: inline-block;
+            font-size: 24px;
+            font-weight: bold;
+            color: #d9534f;
+            background-color: #f9f9f9;
+            padding: 15px 25px;
+            border-radius: 5px;
+            border: 1px dashed #dddddd;
+            margin: 15px 0;
+        }
+        .footer {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid #eeeeee;
+            font-size: 12px;
+            color: #999999;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Account Verification</h1>
+        </div>
+        <div class="content">
+            <p>Thank you for signing up. Please use the following 4-digit verification code to complete your registration:</p>
+            <div class="code">${verificationCode}</div>
+            <p>This code will expire in 15 minutes. If you did not request this, please ignore this email.</p>
+        </div>
+        <div class="footer">
+            <p>&copy; Foodies Heaven. All rights reserved.</p>
+        </div>
+    </div>
+</body>
+</html>`,
     });
 
     return NextResponse.json(

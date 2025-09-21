@@ -10,6 +10,7 @@ import { FaRegClock } from "react-icons/fa";
 import { GiSpoon } from "react-icons/gi";
 import { FaTags } from "react-icons/fa6";
 import Loader from "../Loader";
+import Heading from "@/utils/Heading";
 
 const RecipeDetail = ({ id }) => {
   const [recipe, setRecipe] = useState(null);
@@ -57,6 +58,11 @@ const RecipeDetail = ({ id }) => {
 
   return (
     <>
+      <Heading
+        title={`Recipe: ${recipe?.title} | Foodie's Heaven`}
+        description={`Learn how to make ${recipe?.title} with step-by-step instructions. Enjoy delicious flavors at Foodie's Heaven! at ${recipe.region}`}
+        keywords={`${recipe?.title}, ${recipe.region}, recipe, cooking, food, homemade dishes, easy meals, gourmet recipes, Foodie's Heaven`}
+      />
       <div className="w-full  bg-bgWhite flex justify-center items-center">
         <div className="w-full md:w-11/12 lg:w-11/12 mx-auto flex flex-col">
           <div className="w-full mx-auto flex flex-col lg:flex-row md:flex-col gap-2">

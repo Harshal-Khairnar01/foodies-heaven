@@ -24,8 +24,6 @@ const AllUsers = ({ handleDeleteUser }) => {
       setLoading(true);
       const url = `/api/user?page=${page}&user=${searchTerm}&limit=${ITEM_PER_PAGE}`;
       const res = await axios.get(url);
-
-      console.log(res.data.users);
       if (res.data) {
         setUsers(res.data.users);
         setCount(res.data.count);
